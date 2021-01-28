@@ -7,8 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let gravity = 0.9;
     let isGameOver = false;
     let position = 0;
-    let number = -4;
+    let number = -5;
     let request;
+    let start;
+    let progress;
+    let stopId;
     
     function control(e) {
         if (e.keyCode === 32) {
@@ -20,19 +23,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     document.addEventListener('keydown', control);
+
+    // const step = (timestamp) =>{
+    //     if(!start || progress > 400)
+    //         start = timestamp;
+    //     progress = (timestamp - start) /10 + 50;
+    //     element.style.top = progress + 'px';
+    //     stopId = window.requestAnimationFrame(step);
+    // }
     
     const performAnimation = () => {
         request = requestAnimationFrame(performAnimation)
         //animate something\
         //Math.ceil(Math.pow(number, (1 / 2)))
-        console.log(position++ + "   -   "+number+"    -   "+ Math.pow(number++, 2) );
-        if(number > 10)
+
+        //position = (16 - (Math.pow(number++, 2)));
+        //dino.style.bottom = position + 'px';
+        //console.log(position + "   -   "+number+"    -   "+ (16 - (Math.pow(number++, 2))) );
+        position = (14*25 - 14*(Math.pow(number, 2)))
+        console.log(number+"    -   "+ position );
+        dino.style.bottom = position/2 + 'px';
+        //console.log(number+"    -   "+ (16 - (Math.pow(number, 2))) + "This si different");
+        number+=0.20;
+        if(number >= 5)
+            
             cancelAnimationFrame(request);
         //TODO: this is working prototype format    
       }
     
     function jump() {
         console.log('Still working!!');
+        number = -4;
         requestAnimationFrame(performAnimation);
         
       
