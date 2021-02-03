@@ -1,3 +1,15 @@
+class character{
+    constructor(name, image, id){
+        this._designation = name;
+        this._image = image;
+        this._anchorID = id;
+    }
+    motion(){
+
+    }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const dino = document.querySelector('.dino');
     const grid = document.querySelector('.grid');
@@ -9,83 +21,41 @@ document.addEventListener('DOMContentLoaded', () => {
     let position = 0;
     let number = -5;
     let request;
-    let start;
+    let power = 17;
+    let delay = .2;
     let progress;
     let stopId;
     
     function control(e) {
         if (e.keyCode === 32) {
-            // if (!isJumping) {
-            //     isJumping = true;
-            //     jump();
-            // }
-            jump();
+            if (!isJumping) {
+                isJumping = true;
+                jump();
+            }
+            //jump();
         }
     }
     document.addEventListener('keydown', control);
 
-    // const step = (timestamp) =>{
-    //     if(!start || progress > 400)
-    //         start = timestamp;
-    //     progress = (timestamp - start) /10 + 50;
-    //     element.style.top = progress + 'px';
-    //     stopId = window.requestAnimationFrame(step);
-    // }
-    
     const performAnimation = () => {
         request = requestAnimationFrame(performAnimation)
-        //animate something\
-        //Math.ceil(Math.pow(number, (1 / 2)))
-
-        //position = (16 - (Math.pow(number++, 2)));
-        //dino.style.bottom = position + 'px';
-        //console.log(position + "   -   "+number+"    -   "+ (16 - (Math.pow(number++, 2))) );
-        position = (14*25 - 14*(Math.pow(number, 2)))
-        console.log(number+"    -   "+ position );
+        position = (power*25 - power*(Math.pow(number, 2) ))
         dino.style.bottom = position/2 + 'px';
-        //console.log(number+"    -   "+ (16 - (Math.pow(number, 2))) + "This si different");
-        number+=0.20;
-        if(number >= 5)
-            
+        number+=delay;
+        if(number >= 5){
             cancelAnimationFrame(request);
-        //TODO: this is working prototype format    
+            isJumping = !isJumping;
+        }
+        //TODO: Not working as a object. Need to look how to make the requestAnimationFrame call inside a object     
       }
     
     function jump() {
-        console.log('Still working!!');
         number = -4;
         requestAnimationFrame(performAnimation);
-        
-      
-
-
-        // let count = 0;
-        // let timerId = setInterval(function () {
-        //     //move down
-        //     if (count === 15) {
-        //         clearInterval(timerId);
-        //         let downTimerId = setInterval(function () {
-        //         if (count === 0) {
-        //                 clearInterval(downTimerId);
-        //                 isJumping = false;
-        //             }
-        //             position -= 5;
-        //             count--;
-        //             position = position * gravity;
-        //             dino.style.bottom = position + 'px';
-        //         },20)
-        //     }
-        //     //move up
-        //     else{
-        //         position +=30;
-        //         count++;
-        //         position = position * gravity;
-        //         dino.style.bottom = position + 'px'; 
-        //     }
-        // },20)
     }
     
     function generateObstacles() {
+        //TODO: This needs a lot of work
         let randomTime = Math.random() * 4000;
         let obstaclePosition = 1000;
         const obstacle = document.createElement('div');
@@ -110,5 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },20)
         if (!isGameOver) setTimeout(generateObstacles, randomTime)
     }
-    //generateObstacles();
+
+
+    generateObstacles();
 })
