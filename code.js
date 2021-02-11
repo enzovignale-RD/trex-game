@@ -1,4 +1,4 @@
-class character{
+class actionFigure{
     constructor(name, image, id){
         this._designation = name;
         this._image = image;
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let number = -5;
     let request;
     let power = 17;
-    let delay = .2;
+    let delay = .24;
     let progress;
     let stopId;
     
@@ -30,7 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.keyCode === 32) {
             if (!isJumping) {
                 isJumping = true;
-                jump();
+                //jump();
+                number = -4;
+                requestAnimationFrame(performAnimation);    
             }
             //jump();
         }
@@ -48,21 +50,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         //TODO: Not working as a object. Need to look how to make the requestAnimationFrame call inside a object     
       }
-    
-    function jump() {
-        number = -4;
-        requestAnimationFrame(performAnimation);
-    }
+    //TODO: Do I need this?
+    // function jump() {
+    //     number = -4;
+    //     requestAnimationFrame(performAnimation);
+    // }
     
     function generateObstacles() {
         //TODO: This needs a lot of work
         let randomTime = Math.random() * 4000;
-        let obstaclePosition = 1000;
+        let obstaclePosition = 2000;
+
+        //Obstacle is created here
         const obstacle = document.createElement('div');
         if (!isGameOver) obstacle.classList.add('obstacle')
         grid.appendChild(obstacle);
         obstacle.style.left = obstaclePosition + 'px';
 
+        //Detecting Collision
         let timerId = setInterval(function() {
         if (obstaclePosition > 0 && obstaclePosition < 60 && position < 60) {
             clearInterval(timerId);
@@ -73,11 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
             while (grid.firstChild) {
                 grid.removeChild(grid.lastChild)
             }
-            
         }
-            obstaclePosition -=10;
+            obstaclePosition -=20;
             obstacle.style.left = obstaclePosition + 'px';
-        },20)
+        },20);
+
+        // if Collision happen, stop animation
         if (!isGameOver) setTimeout(generateObstacles, randomTime)
     }
 
