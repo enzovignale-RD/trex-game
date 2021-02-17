@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const performAnimation = () => {
         request = requestAnimationFrame(performAnimation)
         position = (power*25 - power*(Math.pow(number, 2) ))
-        dino.style.bottom = position/2 + 'px';
+        //dino.style.bottom = position/2 + 'px';
+        dino.style.setProperty('--dinoOriginalPosition', position/2+'px');
         number+=delay;
         if(number >= 5){
             cancelAnimationFrame(request);
@@ -68,20 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
         obstacle.style.left = obstaclePosition + 'px';
 
         //Detecting Collision
-        let timerId = setInterval(function() {
-        if (obstaclePosition > 0 && obstaclePosition < 60 && position < 60) {
-            clearInterval(timerId);
-            alert.innerHTML = 'Game Over';
-            isGameOver = true;
-            //remove all children
-            body.removeChild(body.firstChild);
-            while (grid.firstChild) {
-                grid.removeChild(grid.lastChild)
-            }
-        }
-            obstaclePosition -=20;
-            obstacle.style.left = obstaclePosition + 'px';
-        },20);
+        // let timerId = setInterval(function() {
+        // if (obstaclePosition > 0 && obstaclePosition < 60 && position < 60) {
+        //     clearInterval(timerId);
+        //     alert.innerHTML = 'Game Over';
+        //     isGameOver = true;
+        //     //remove all children
+        //     body.removeChild(body.firstChild);
+        //     while (grid.firstChild) {
+        //         grid.removeChild(grid.lastChild)
+        //     }
+        // }
+        //     obstaclePosition -=20;
+        //     obstacle.style.left = obstaclePosition + 'px';
+        // },20);
 
         // if Collision happen, stop animation
         if (!isGameOver) setTimeout(generateObstacles, randomTime)
